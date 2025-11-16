@@ -21,11 +21,34 @@
 	idf.py menuconfig
 	idf.py build
 
+	//flash
 	idf.py -p COM6 flash
+	
+	//COM monitor 115200
 	idf.py -p COM6 monitor
-	//或者下载加监控串口一起
+	
+	//flash and COM monitor
 	idf.py -p COM6 flash monitor
 	
 ## esp32s3 flash tool download
 
 	https://docs.espressif.com/projects/esp-test-tools/en/latest/esp32s3/production_stage/tools/flash_download_tool.html
+
+
+## code
+
+### esp32s3_ai_deck_allinone
+
+- support ov2640 camera stream to Web HTTP Server
+- support sample micphone data then play speaker
+
+### esp32s3_camera_ov2640_stream
+
+- support ov2640 camera stream to Web HTTP Server
+  
+### esp32s3_audio_i2s_es8311
+
+- support audio play music
+- support sample micphone data then play speaker 
+  
+        
