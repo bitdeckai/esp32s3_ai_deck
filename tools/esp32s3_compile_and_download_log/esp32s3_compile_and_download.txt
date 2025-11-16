@@ -1,0 +1,229 @@
+PS E:\0_project\esp32s3_camera\code\esp32s3_ai_deck\esp32s3_ai_deck_allinone> idf.py -p COM94 flash monitor
+Executing action: flash
+Running ninja in directory E:\0_project\esp32s3_camera\code\esp32s3_ai_deck\esp32s3_ai_deck_allinone\build
+Executing "ninja flash"...
+[1/5] C:\WINDOWS\system32\cmd.exe /C "cd /D E:\0_project\esp32s3_camera\code...sp32s3_ai_deck/esp32s3_ai_deck_allinone/build/esp32s3_eye_ov2640_stream.bin
+esp32s3_eye_ov2640_stream.bin binary size 0xe7a90 bytes. Smallest app partition is 0x100000 bytes. 0x18570 bytes (10%) free.
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D E:\0_project\esp32s3_camera\code...de/esp32s3_ai_deck/esp32s3_ai_deck_allinone/build/bootloader/bootloader.bin
+Bootloader binary size 0x5260 bytes. 0x2da0 bytes (36%) free.
+[4/5] C:\WINDOWS\system32\cmd.exe /C "cd /D H:\esp32\Espressif\Espressif\fra...pressif/frameworks/esp-idf-v5.5/components/esptool_py/run_serial_tool.cmake
+esptool.py --chip esp32s3 -p COM94 -b 460800 --before=default_reset --after=hard_reset write_flash --flash_mode dio --flash_freq 80m --flash_size 2MB 0x0 bootloader/bootloader.bin 0x10000 esp32s3_eye_ov2640_stream.bin 0x8000 partition_table/partition-table.bin
+esptool.py v4.9.1
+Serial port COM94
+Connecting.....
+Chip is ESP32-S3 (QFN56) (revision v0.2)
+Features: WiFi, BLE, Embedded PSRAM 8MB (AP_3v3)
+Crystal is 40MHz
+USB mode: USB-Serial/JTAG
+MAC: 30:ed:a0:1e:fa:24
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 460800
+Changed.
+Configuring flash size...
+Flash will be erased from 0x00000000 to 0x00005fff...
+Flash will be erased from 0x00010000 to 0x000f7fff...
+Flash will be erased from 0x00008000 to 0x00008fff...
+SHA digest in image updated
+Compressed 21088 bytes to 13422...
+Writing at 0x00000000... (100 %)
+Wrote 21088 bytes (13422 compressed) at 0x00000000 in 0.2 seconds (effective 792.1 kbit/s)...
+Hash of data verified.
+Compressed 948880 bytes to 575954...
+Writing at 0x00010000... (2 %)
+Writing at 0x0001d59e... (5 %)
+Writing at 0x00027d80... (8 %)
+Writing at 0x000309b4... (11 %)
+Writing at 0x0003b50a... (13 %)
+Writing at 0x00041194... (16 %)
+Writing at 0x00047725... (19 %)
+Writing at 0x0004db01... (22 %)
+Writing at 0x00054ea6... (25 %)
+Writing at 0x0005bfcf... (27 %)
+Writing at 0x00061ffe... (30 %)
+Writing at 0x000683c0... (33 %)
+Writing at 0x0006e25b... (36 %)
+Writing at 0x000741e5... (38 %)
+Writing at 0x00079482... (41 %)
+Writing at 0x0007e443... (44 %)
+Writing at 0x00083f6c... (47 %)
+Writing at 0x0008949b... (50 %)
+Writing at 0x0008e90b... (52 %)
+Writing at 0x00093e69... (55 %)
+Writing at 0x00099cad... (58 %)
+Writing at 0x0009faf6... (61 %)
+Writing at 0x000a5435... (63 %)
+Writing at 0x000ab02d... (66 %)
+Writing at 0x000b0d57... (69 %)
+Writing at 0x000b66ca... (72 %)
+Writing at 0x000bc3f1... (75 %)
+Writing at 0x000c2739... (77 %)
+Writing at 0x000c7e18... (80 %)
+Writing at 0x000ce2e4... (83 %)
+Writing at 0x000d8856... (86 %)
+Writing at 0x000de7cb... (88 %)
+Writing at 0x000e4e04... (91 %)
+Writing at 0x000eae68... (94 %)
+Writing at 0x000f124c... (97 %)
+Writing at 0x000f676d... (100 %)
+Wrote 948880 bytes (575954 compressed) at 0x00010000 in 5.0 seconds (effective 1528.5 kbit/s)...
+Hash of data verified.
+Compressed 3072 bytes to 103...
+Writing at 0x00008000... (100 %)
+Wrote 3072 bytes (103 compressed) at 0x00008000 in 0.0 seconds (effective 903.7 kbit/s)...
+Hash of data verified.
+
+Leaving...
+Hard resetting via RTS pin...
+Executing action: monitor
+Running idf_monitor in directory E:\0_project\esp32s3_camera\code\esp32s3_ai_deck\esp32s3_ai_deck_allinone
+Executing "H:\esp32\Espressif\Espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe H:\esp32\Espressif\Espressif\frameworks\esp-idf-v5.5\tools/idf_monitor.py -p COM94 -b 115200 --toolchain-prefix xtensa-esp32s3-elf- --target esp32s3 --revision 0 E:\0_project\esp32s3_camera\code\esp32s3_ai_deck\esp32s3_ai_deck_allinone\build\esp32s3_eye_ov2640_stream.elf E:\0_project\esp32s3_camera\code\esp32s3_ai_deck\esp32s3_ai_deck_allinone\build\bootloader\bootloader.elf --force-color -m 'H:\esp32\Espressif\Espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe' 'H:\esp32\Espressif\Espressif\frameworks\esp-idf-v5.5\tools\idf.py' '-p' 'COM94'"...
+--- Warning: GDB cannot open serial ports accessed as COMx
+--- Using \\.\COM94 instead...
+--- esp-idf-monitor 1.7.0 on \\.\COM94 115200
+--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H
+I (111) esp_image: segment 1: paddr=00033330 vaddr=3fc9dd00 sizeESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x15 (USB_UART_CHIP_RESET),boot:0x2a (SPI_FAST_FLASH_BOOT)
+Saved PC:0x4200bd1f
+--- 0x4200bd1f: s_test_psram at H:/esp32/Espressif/Espressif/frameworks/esp-idf-v5.5/components/esp_psram/system_layer/esp_psram.c:554
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x159c
+load:0x403c8700,len:0xd24
+--- 0x403c8700: _stext at ??:?
+load:0x403cb700,len:0x2f48
+entry 0x403c8924
+--- 0x403c8924: call_start_cpu0 at H:/esp32/Espressif/Espressif/frameworks/esp-idf-v5.5/components/bootloader/subproject/main/bootloader_start.c:25
+I (24) boot: ESP-IDF v5.5 2nd stage bootloader
+I (24) boot: compile time Nov 16 2025 19:19:54
+I (25) boot: Multicore bootloader
+I (25) boot: chip revision: v0.2
+I (27) boot: efuse block revision: v1.3
+I (31) boot.esp32s3: Boot SPI Speed : 80MHz
+I (35) boot.esp32s3: SPI Mode       : DIO
+I (39) boot.esp32s3: SPI Flash Size : 2MB
+I (42) boot: Enabling RNG early entropy source...
+I (47) boot: Partition Table:
+I (49) boot: ## Label            Usage          Type ST Offset   Length
+I (56) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (62) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (69) boot:  2 factory          factory app      00 00 00010000 00100000
+I (75) boot: End of partition table
+I (79) esp_image: segment 0: paddr=00010020 vaddr=3c0b0020 size=23308h (144136) map
+I (111) esp_image: segment 1: paddr=00033330 vaddr=3fc9dd00 size=07600h ( 30208) load
+I (118) esp_image: segment 2: paddr=0003a938 vaddr=40374000 size=056e0h ( 22240) load
+I (123) esp_image: segment 3: paddr=00040020 vaddr=42000020 size=a3500h (668928) map
+I (242) esp_image: segment 4: paddr=000e3528 vaddr=403796e0 size=1451ch ( 83228) load
+I (260) esp_image: segment 5: paddr=000f7a4c vaddr=600fe000 size=00020h (    32) load
+I (271) boot: Loaded app from partition at offset 0x10000
+I (271) boot: Disabling RNG early entropy source...
+I (281) octal_psram: vendor id    : 0x0d (AP)
+I (281) octal_psram: dev id       : 0x02 (generation 3)
+I (282) octal_psram: density      : 0x03 (64 Mbit)
+I (284) octal_psram: good-die     : 0x01 (Pass)
+I (288) octal_psram: Latency      : 0x01 (Fixed)
+I (292) octal_psram: VCC          : 0x01 (3V)
+I (296) octal_psram: SRF          : 0x01 (Fast Refresh)
+I (301) octal_psram: BurstType    : 0x01 (Hybrid Wrap)
+I (306) octal_psram: BurstLen     : 0x01 (32 Byte)
+I (311) octal_psram: Readlatency  : 0x02 (10 cycles@Fixed)
+I (316) octal_psram: DriveStrength: 0x00 (1/1)
+I (321) MSPI Timing: PSRAM timing tuning index: 10
+I (325) esp_psram: Found 8MB PSRAM device
+I (328) esp_psram: Speed: 80MHz
+I (331) cpu_start: Multicore app
+I (760) esp_psram: SPI SRAM memory test OK
+I (769) cpu_start: Pro cpu start user code
+I (769) cpu_start: cpu freq: 160000000 Hz
+I (769) app_init: Application information:
+I (769) app_init: Project name:     esp32s3_eye_ov2640_stream
+I (775) app_init: App version:      1
+I (778) app_init: Compile time:     Nov 16 2025 19:19:27
+I (783) app_init: ELF file SHA256:  035164dfa...
+I (787) app_init: ESP-IDF:          v5.5
+I (791) efuse_init: Min chip rev:     v0.0
+I (795) efuse_init: Max chip rev:     v0.99
+I (799) efuse_init: Chip rev:         v0.2
+I (803) heap_init: Initializing. RAM available for dynamic allocation:
+I (809) heap_init: At 3FCA9908 len 0003FE08 (255 KiB): RAM
+I (814) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM
+I (819) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM
+I (824) heap_init: At 600FE020 len 00001FC8 (7 KiB): RTCRAM
+I (830) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator
+I (837) spi_flash: detected chip: generic
+I (840) spi_flash: flash io: dio
+W (843) spi_flash: Detected size(16384k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+I (856) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (862) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (869) main_task: Started on CPU0
+I (879) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations
+I (879) main_task: Calling app_main()
+I (879) AIO: Starting...
+I (899) pp: pp rom version: e7ae62f
+I (909) net80211: net80211 rom version: e7ae62f
+I (919) wifi:wifi driver task: 3fced43c, prio:23, stack:6656, core=0
+I (929) wifi:wifi firmware version: f3dbad7
+I (929) wifi:wifi certification version: v7.0
+I (929) wifi:config NVS flash: enabled
+I (929) wifi:config nano formatting: disabled
+I (929) wifi:Init data frame dynamic rx buffer num: 32
+I (939) wifi:Init static rx mgmt buffer num: 5
+I (939) wifi:Init management short buffer num: 32
+I (939) wifi:Init dynamic tx buffer num: 32
+I (949) wifi:Init static tx FG buffer num: 2
+I (949) wifi:Init static rx buffer size: 1600
+I (959) wifi:Init static rx buffer num: 10
+I (959) wifi:Init dynamic rx buffer num: 32
+I (969) wifi_init: rx ba win: 6
+I (969) wifi_init: accept mbox: 6
+I (969) wifi_init: tcpip mbox: 32
+I (969) wifi_init: udp mbox: 6
+I (979) wifi_init: tcp mbox: 6
+I (979) wifi_init: tcp tx win: 5760
+I (979) wifi_init: tcp rx win: 5760
+I (989) wifi_init: tcp mss: 1440
+I (989) wifi_init: WiFi IRAM OP enabled
+I (989) wifi_init: WiFi RX IRAM OP enabled
+W (999) wifi:Password length matches WPA2 standards, authmode threshold changes from OPEN to WPA2
+I (999) phy_init: phy_version 701,f4f1da3a,Mar  3 2025,15:50:10
+I (1049) wifi:mode : sta (30:ed:a0:1e:fa:24)
+I (1049) wifi:enable tsf
+I (1049) AIO: wifi_init_sta finished.
+I (1049) s3 ll_cam: DMA Channel=0
+I (1049) cam_hal: cam init ok
+I (1049) sccb-ng: pin_sda 4 pin_scl 5
+I (1059) sccb-ng: sccb_i2c_port=1
+I (1059) wifi:new:<1,0>, old:<1,0>, ap:<255,255>, sta:<1,0>, prof:1, snd_ch_cfg:0x0
+I (1069) wifi:state: init -> auth (0xb0)
+I (1069) camera: Camera PID=0x26 VER=0x42 MIDL=0x7f MIDH=0xa2
+I (1079) camera: Detected OV2640 camera
+I (1079) camera: Detected camera at address=0x30
+I (1089) wifi:state: auth -> assoc (0x0)
+I (1099) wifi:state: assoc -> run (0x10)
+I (1139) wifi:connected with HUAWEI-yang, aid = 10, channel 1, BW20, bssid = 22:84:d0:26:e7:53
+I (1139) wifi:security: WPA2-PSK, phy: bgn, rssi: -35
+I (1149) wifi:pm start, type: 1
+
+I (1149) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
+I (1149) wifi:set rx beacon pti, rx_bcn_pti: 0, bcn_timeout: 25000, mt_pti: 0, mt_time: 10000
+I (1169) wifi:AP's beacon interval = 102400 us, DTIM period = 1
+I (1189) cam_hal: PSRAM DMA mode disabled
+I (1189) cam_hal: buffer_size: 16384, half_buffer_size: 1024, node_buffer_size: 1024, node_cnt: 16, total_cnt: 375
+I (1189) wifi:<ba-add>idx:0 (ifx:0, 22:84:d0:26:e7:53), tid:0, ssn:0, winSize:64
+I (1199) cam_hal: Allocating 384000 Byte frame buffer in PSRAM
+I (1199) cam_hal: Allocating 384000 Byte frame buffer in PSRAM
+I (1209) cam_hal: cam config ok
+I (1209) ov2640: Set PLL: clk_2x: 0, clk_div: 0, pclk_auto: 0, pclk_div: 12
+I (1289) AIO: Camera stream ready. Connect to http://<device_ip>/
+I (1289) AIO: i2s es8311 codec example start
+-----------------------------
+
+I (1289) AIO: i2s driver init success
+I (1309) ES8311: ES8311 in Slave mode and I2S format
+I (1319) AIO: es8311 codec init success
+I (1319) AIO: [echo] Echo start
+I (1319) main_task: Returned from app_main()
+I (2229) esp_netif_handlers: sta ip: 192.168.3.97, mask: 255.255.255.0, gw: 192.168.3.1
+I (13269) AIO: index_handler...
