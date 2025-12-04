@@ -274,5 +274,6 @@
 
 ## Demo video
 
-[查看视频: 视频流+录音喇叭回放](media/esp32s3_camera_ov2640_allinone_test3.mp4)
+![视频预览](media/esp32s3_camera_ov2640_allinone_test3.gif)
 
+[点击查看视频](media/esp32s3_camera_ov2640_allinone_test3.mp4)
