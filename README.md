@@ -86,12 +86,6 @@
 
 ![esp32s3_camera_ov2640_allinone_test1](media/esp32s3_camera_ov2640_allinone_test1.jpg)
 
-Demo video
-
-<video id="video" controls="" preload="none" poster="封面">
-      <source id="mp4" src="media/esp32s3_camera_ov2640_allinone_test3.mp4" type="video/mp4">
-</videos>
-
 ## esp32s3_ai_deck_allinone UART log
 
 	E:\0_project\esp32s3_camera\code\esp32s3_ai_deck\esp32s3_ai_deck_allinone>idf.py -p COM81 flash
@@ -278,5 +272,9 @@ Demo video
 	I (2275) esp_netif_handlers: sta ip: 192.168.3.106, mask: 255.255.255.0, gw: 192.168.3.1
 	
 
+## Demo video
 
+<video id="video" controls="" preload="none" poster="封面">
+      <source id="mp4" src="media/esp32s3_camera_ov2640_allinone_test3.mp4" type="video/mp4">
+</videos>
 
