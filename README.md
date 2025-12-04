@@ -274,7 +274,5 @@
 
 ## Demo video
 
-<video id="video" controls="" preload="none" poster="封面">
-      <source id="mp4" src="media/esp32s3_camera_ov2640_allinone_test3.mp4" type="video/mp4">
-</videos>
+[查看视频: 视频流+录音喇叭回放](media/esp32s3_camera_ov2640_allinone_test3.mp4)
 
