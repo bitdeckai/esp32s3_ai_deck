@@ -1,6 +1,10 @@
-# esp32s3 ai deck
+# esp32s3 AI deck
 
-	esp32s3 ai deck support crazyflie platform based on Bitcraze
+	esp32s3 AI deck support Crazyflie platform
+	
+	esp32s3 AI deck 支持Crazyflie飞行器平台
+
+	Crazyflie飞行器平台参考 https://www.bitcraze.io/
 
 ## hardware esp32s3 ai deck
 
@@ -9,6 +13,12 @@
 ## hardware -- esp32s3 ai deck + Crazyflie2.1
 
 ![esp32s3_camera_ov2640_speaker_crazyflie2.1](media/esp32s3_camera_ov2640_speaker_crazyflie2.1.png)
+
+## Demo video
+
+![视频预览](media/esp32s3_camera_ov2640_allinone_test3.gif)
+
+![点击查看视频](media/esp32s3_camera_ov2640_allinone_test3.mp4)
 
 ## windows install tool for compile
 
@@ -276,10 +286,3 @@
 	I (1365) AIO: [echo] Echo start
 	I (1365) main_task: Returned from app_main()
 	I (2275) esp_netif_handlers: sta ip: 192.168.3.106, mask: 255.255.255.0, gw: 192.168.3.1
-	
-
-## Demo video
-
-![视频预览](media/esp32s3_camera_ov2640_allinone_test3.gif)
-
-[点击查看视频](media/esp32s3_camera_ov2640_allinone_test3.mp4)
