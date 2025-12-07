@@ -44,7 +44,7 @@
 - support audio play music
 - support sample micphone data then play speaker 
 
-## wifi config
+## wifi config default
 
 	#define WIFI_SSID "HUAWEI-yang"
 	#define WIFI_PASS "justinlee"
@@ -66,7 +66,7 @@
 	//查看串口打印信息
 	idf.py -p COM6 monitor
 	
-	//flash and COM monitor
+	//flash and UART monitor
 	//下载和串口监控同时执行
 	idf.py -p COM6 flash monitor
 
@@ -79,12 +79,18 @@
 - From UART log, get the ip address, open the browser, recommend Google Chrome browser, enter the IP address, and then press Enter
 - 从串口log中查看获取的ip地址，打开浏览器，推荐google浏览器，输入ip地址，然后回车
 
-	http://192.168.3.106/
+![esp32s3_camera_ov2640_allinone_test2](media/esp32s3_wifi_monitor_ip.png)
 
+- 然后在浏览器中输入ip地址，就可以查看到视频流 192.168.3.106
 
 ![esp32s3_camera_ov2640_allinone_test2](media/esp32s3_camera_ov2640_allinone_test2.png)
 
 ![esp32s3_camera_ov2640_allinone_test1](media/esp32s3_camera_ov2640_allinone_test1.jpg)
+
+
+- 如果可以登陆路由器，也可以查看esp32s3 ai deck的IP地址
+  
+![esp32s3_camera_ov2640_allinone_test1](media/esp32s3_wifi_route_ip.png)
 
 ## esp32s3_ai_deck_allinone UART log
 
