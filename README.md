@@ -1,7 +1,7 @@
 # esp32s3 AI deck
 
 	esp32s3 AI deck support Crazyflie platform
-	
+
 	esp32s3 AI deck 支持Crazyflie飞行器平台
 
 	Crazyflie飞行器平台参考 https://www.bitcraze.io/
@@ -18,7 +18,7 @@
 
 ![视频预览](media/esp32s3_camera_ov2640_allinone_test3.gif)
 
-![点击查看视频](media/esp32s3_camera_ov2640_allinone_test3.mp4)
+![点击查看视频](media/esp32s3_camera_ov2640_allinone_test4.mp4)
 
 ## windows install tool for compile
 
