@@ -88,7 +88,7 @@
 ![esp32s3_camera_ov2640_allinone_test1](media/esp32s3_camera_ov2640_allinone_test1.jpg)
 
 
-- 如果可以登陆路由器，也可以查看esp32s3 ai deck的IP地址
+- 如果可以登陆路由器，也可以查看esp32s3 ai deck的IP地址，注意需要用2.4G频段，esp32s3并不支持5G的wifi频段
   
 ![esp32s3_camera_ov2640_allinone_test1](media/esp32s3_wifi_route_ip.png)
 
