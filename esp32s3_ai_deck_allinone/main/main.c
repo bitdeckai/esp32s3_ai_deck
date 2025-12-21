@@ -295,9 +295,15 @@ static esp_err_t stream_handler(httpd_req_t *req)
         // 每100ms更新一次全局帧率（更快响应）
         if (elapsed >= 100000) { // 100ms
             float fps = (float)conn_frame_cnt * 1000000.0f / (float)elapsed;
-            ESP_LOGI(TAG, "FPS calc: frames=%d, elapsed=%llu us, fps=%.2f", 
-                     conn_frame_cnt, (unsigned long long)elapsed, fps);
             
+            // 减少日志频率，避免影响性能（每2秒打印一次）
+            static uint32_t log_counter = 0;
+            if (++log_counter >= 10) { // 20次 * 100ms = 2秒
+                ESP_LOGI(TAG, "FPS: %.2f", fps);
+                log_counter = 0;
+            }
+            
+            // 快速更新全局帧率
             if (fps_mutex != NULL) {
                 if (xSemaphoreTake(fps_mutex, 0) == pdTRUE) {
                     current_fps = fps;
@@ -309,7 +315,6 @@ static esp_err_t stream_handler(httpd_req_t *req)
                 current_fps = fps;
             }
             
-            //ESP_LOGI(TAG, "Updated current_fps=%.2f", current_fps);
             conn_frame_cnt = 0;
             conn_start_time = now;
         }
@@ -351,20 +356,16 @@ static esp_err_t fps_handler(httpd_req_t *req)
         }
     }
     
-    char fps_str[32];
+    // 快速格式化（使用更小的缓冲区）
+    char fps_str[16];
     snprintf(fps_str, sizeof(fps_str), "%.2f", fps);
     
-    ESP_LOGI(TAG, "fps_handler called: current_fps=%.2f, returning: %s", fps, fps_str);
-    
-    // 设置响应头
+    // 最小化响应头，快速响应（移除所有日志打印）
     httpd_resp_set_type(req, "text/plain");
-    httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
     httpd_resp_set_hdr(req, "Cache-Control", "no-cache");
     
-    esp_err_t ret = httpd_resp_send(req, fps_str, strlen(fps_str));
-    if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "Failed to send FPS response: %d", ret);
-    }
+    // 立即发送，不检查返回值（避免日志阻塞）
+    httpd_resp_send(req, fps_str, strlen(fps_str));
     
     return ESP_OK;
 }
@@ -393,35 +394,43 @@ static esp_err_t index_handler(httpd_req_t *req)
         "</div>"
         "<img src='/stream' alt='Camera Stream'/>"
         "<script>"
-        "function updateFPS() {"
-        "  console.log('Fetching FPS...');"
-        "  fetch('/fps')"
-        "    .then(response => {"
-        "      console.log('FPS response status:', response.status);"
-        "      if (!response.ok) {"
-        "        console.error('FPS API error:', response.status);"
-        "        return '0.00';"
+        "(function() {"
+        "  console.log('FPS script loaded');"
+        "  var fpsElement = document.getElementById('fps-value');"
+        "  if (!fpsElement) {"
+        "    console.error('FPS element not found!');"
+        "    return;"
+        "  }"
+        "  "
+        "  function updateFPS() {"
+        "    var xhr = new XMLHttpRequest();"
+        "    xhr.open('GET', '/fps', true);"
+        "    xhr.onreadystatechange = function() {"
+        "      if (xhr.readyState === 4) {"
+        "        if (xhr.status === 200) {"
+        "          var data = xhr.responseText.trim();"
+        "          console.log('FPS received:', data);"
+        "          var fpsValue = parseFloat(data);"
+        "          if (!isNaN(fpsValue)) {"
+        "            fpsElement.textContent = fpsValue.toFixed(2);"
+        "          } else {"
+        "            console.error('Invalid FPS:', data);"
+        "          }"
+        "        } else {"
+        "          console.error('FPS request failed:', xhr.status);"
+        "        }"
         "      }"
-        "      return response.text();"
-        "    })"
-        "    .then(data => {"
-        "      console.log('FPS raw data:', data);"
-        "      const fpsValue = parseFloat(data.trim());"
-        "      console.log('FPS parsed value:', fpsValue);"
-        "      if (!isNaN(fpsValue) && fpsValue > 0) {"
-        "        document.getElementById('fps-value').textContent = fpsValue.toFixed(2);"
-        "      } else {"
-        "        console.error('Invalid FPS data:', data);"
-        "        document.getElementById('fps-value').textContent = '0.00';"
-        "      }"
-        "    })"
-        "    .catch(err => {"
-        "      console.error('FPS update error:', err);"
-        "    });"
-        "}"
-        "console.log('Starting FPS update interval...');"
-        "setInterval(updateFPS, 500);"
-        "updateFPS();"
+        "    };"
+        "    xhr.onerror = function() {"
+        "      console.error('FPS request error');"
+        "    };"
+        "    xhr.send();"
+        "  }"
+        "  "
+        "  console.log('Setting up FPS interval');"
+        "  setInterval(updateFPS, 500);"
+        "  updateFPS();"
+        "})();"
         "</script>"
         "</body>"
         "</html>";
