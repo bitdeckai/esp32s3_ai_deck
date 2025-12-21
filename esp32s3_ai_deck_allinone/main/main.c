@@ -3,6 +3,7 @@
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "freertos/semphr.h"
 #include "esp_system.h"
 #include "esp_log.h"
 #include "nvs_flash.h"
@@ -12,6 +13,7 @@
 
 #include "esp_camera.h"
 #include "esp_http_server.h"
+#include "esp_timer.h"
 
 #include "driver/i2s_std.h"
 #include "esp_check.h"
@@ -22,6 +24,11 @@
 #include "audio_config.h"
 
 static const char *TAG = "AIO";
+
+// 帧率统计
+static volatile uint32_t frame_count = 0;  // 使用volatile确保可见性
+static float current_fps = 0.0;
+static SemaphoreHandle_t fps_mutex = NULL;
 
 //wifi
 #define WIFI_SSID "HUAWEI-yang"
@@ -253,6 +260,8 @@ static esp_err_t start_wifi(void)
     return ESP_OK;
 }
 
+// 帧率计算任务已移除，改为在stream_handler中直接计算
+
 static esp_err_t stream_handler(httpd_req_t *req)
 {
     camera_fb_t * fb = NULL;
@@ -263,6 +272,10 @@ static esp_err_t stream_handler(httpd_req_t *req)
 
     httpd_resp_set_type(req, _STREAM_CONTENT_TYPE);
 
+    // 每个连接的帧率统计（使用局部静态变量，每个连接独立）
+    uint64_t conn_start_time = esp_timer_get_time();
+    uint32_t conn_frame_cnt = 0;
+
     while (true) {
         fb = esp_camera_fb_get();
         if (!fb) {
@@ -270,6 +283,37 @@ static esp_err_t stream_handler(httpd_req_t *req)
             res = ESP_FAIL;
             break;
         }
+
+        // 更新全局帧计数器
+        frame_count++;
+        
+        // 更新连接级别的帧率统计
+        conn_frame_cnt++;
+        uint64_t now = esp_timer_get_time();
+        uint64_t elapsed = now - conn_start_time;
+        
+        // 每100ms更新一次全局帧率（更快响应）
+        if (elapsed >= 100000) { // 100ms
+            float fps = (float)conn_frame_cnt * 1000000.0f / (float)elapsed;
+            ESP_LOGI(TAG, "FPS calc: frames=%d, elapsed=%llu us, fps=%.2f", 
+                     conn_frame_cnt, (unsigned long long)elapsed, fps);
+            
+            if (fps_mutex != NULL) {
+                if (xSemaphoreTake(fps_mutex, 0) == pdTRUE) {
+                    current_fps = fps;
+                    xSemaphoreGive(fps_mutex);
+                } else {
+                    current_fps = fps; // 如果无法获取锁，直接更新
+                }
+            } else {
+                current_fps = fps;
+            }
+            
+            //ESP_LOGI(TAG, "Updated current_fps=%.2f", current_fps);
+            conn_frame_cnt = 0;
+            conn_start_time = now;
+        }
+
 
         size_t hlen = snprintf(NULL, 0, _STREAM_PART, fb->len);
         char *part_buf = malloc(hlen + 1);
@@ -295,9 +339,92 @@ static esp_err_t stream_handler(httpd_req_t *req)
     return res;
 }
 
+static esp_err_t fps_handler(httpd_req_t *req)
+{
+    float fps = current_fps; // 直接读取，避免阻塞
+    
+    // 如果互斥锁可用，尝试获取最新值
+    if (fps_mutex != NULL) {
+        if (xSemaphoreTake(fps_mutex, 0) == pdTRUE) {
+            fps = current_fps;
+            xSemaphoreGive(fps_mutex);
+        }
+    }
+    
+    char fps_str[32];
+    snprintf(fps_str, sizeof(fps_str), "%.2f", fps);
+    
+    ESP_LOGI(TAG, "fps_handler called: current_fps=%.2f, returning: %s", fps, fps_str);
+    
+    // 设置响应头
+    httpd_resp_set_type(req, "text/plain");
+    httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
+    httpd_resp_set_hdr(req, "Cache-Control", "no-cache");
+    
+    esp_err_t ret = httpd_resp_send(req, fps_str, strlen(fps_str));
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to send FPS response: %d", ret);
+    }
+    
+    return ESP_OK;
+}
+
 static esp_err_t index_handler(httpd_req_t *req)
 {
-    const char* resp_str = "<html><body><img src=\"/stream\"/></body></html>";
+    const char* resp_str = 
+        "<!DOCTYPE html>"
+        "<html>"
+        "<head>"
+        "<meta charset='UTF-8'>"
+        "<title>ESP32-S3 Camera Stream</title>"
+        "<style>"
+        "body { margin: 0; padding: 20px; background-color: #1a1a1a; color: #fff; font-family: Arial, sans-serif; }"
+        "#fps { position: absolute; top: 20px; left: 20px; background-color: rgba(0,0,0,0.7); padding: 10px 15px; border-radius: 5px; font-size: 18px; font-weight: bold; z-index: 1000; }"
+        "#fps-label { color: #aaa; font-size: 14px; margin-right: 5px; }"
+        "#fps-value { color: #4CAF50; }"
+        "img { max-width: 100%; height: auto; display: block; }"
+        "</style>"
+        "</head>"
+        "<body>"
+        "<div id='fps'>"
+        "<span id='fps-label'>帧率:</span>"
+        "<span id='fps-value'>0.00</span>"
+        "<span> FPS</span>"
+        "</div>"
+        "<img src='/stream' alt='Camera Stream'/>"
+        "<script>"
+        "function updateFPS() {"
+        "  console.log('Fetching FPS...');"
+        "  fetch('/fps')"
+        "    .then(response => {"
+        "      console.log('FPS response status:', response.status);"
+        "      if (!response.ok) {"
+        "        console.error('FPS API error:', response.status);"
+        "        return '0.00';"
+        "      }"
+        "      return response.text();"
+        "    })"
+        "    .then(data => {"
+        "      console.log('FPS raw data:', data);"
+        "      const fpsValue = parseFloat(data.trim());"
+        "      console.log('FPS parsed value:', fpsValue);"
+        "      if (!isNaN(fpsValue) && fpsValue > 0) {"
+        "        document.getElementById('fps-value').textContent = fpsValue.toFixed(2);"
+        "      } else {"
+        "        console.error('Invalid FPS data:', data);"
+        "        document.getElementById('fps-value').textContent = '0.00';"
+        "      }"
+        "    })"
+        "    .catch(err => {"
+        "      console.error('FPS update error:', err);"
+        "    });"
+        "}"
+        "console.log('Starting FPS update interval...');"
+        "setInterval(updateFPS, 500);"
+        "updateFPS();"
+        "</script>"
+        "</body>"
+        "</html>";
     ESP_LOGI(TAG, "index_handler...");
 
     httpd_resp_set_type(req, "text/html");
@@ -327,6 +454,14 @@ static httpd_handle_t start_http_server(void)
             .user_ctx = NULL
         };
         httpd_register_uri_handler(server, &stream_uri);
+
+        httpd_uri_t fps_uri = {
+            .uri = "/fps",
+            .method = HTTP_GET,
+            .handler = fps_handler,
+            .user_ctx = NULL
+        };
+        httpd_register_uri_handler(server, &fps_uri);
     }
     return server;
 }
@@ -343,6 +478,14 @@ void app_main(void)
         ESP_LOGE(TAG, "Camera init failed with error 0x%x", err);
         return;
     }
+
+    // 创建帧率统计互斥锁
+    fps_mutex = xSemaphoreCreateMutex();
+    if (fps_mutex == NULL) {
+        ESP_LOGE(TAG, "Failed to create FPS mutex");
+    }
+
+    // 帧率统计在stream_handler中直接计算，不需要独立任务
 
     start_http_server();
     ESP_LOGI(TAG, "Camera stream ready. Connect to http://<device_ip>/");
