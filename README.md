@@ -137,6 +137,12 @@
   
 ![esp32s3_camera_ov2640_allinone_test1](media/esp32s3_wifi_route_ip.png)
 
+## esp32s3 ai deck和其他deck兼容问题
+
+当Lighthouse deck插入之后，esp32s3 ai deck的TX2和RX2接口，需要跟飞行器断开，才能启动
+
+![esp32s3_camera_ov2640_allinone_test1](media/esp32s3_uart.png)
+
 ## esp32s3_ai_deck_allinone UART log
 
 	E:\0_project\esp32s3_camera\code\esp32s3_ai_deck\esp32s3_ai_deck_allinone>idf.py -p COM81 flash
