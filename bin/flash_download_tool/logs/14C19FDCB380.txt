@@ -1,0 +1,35 @@
+*************************** START ****************************
+Chip: ESP32S3
+Download mode: uart
+Start time: 20260523-23:19
+Connect baud: 115200
+Com:COM76
+connecting...
+manufacturer_id: 0x46
+device_id: 0x4018
+fs:0x200200
+address/file: 0 C:\Users\liyang\Desktop\新建文件夹\flash_download_tool\dl_temp\bin_tmp\downloadPanel1\bootloader.bin
+address/file: 32768 C:\Users\liyang\Desktop\新建文件夹\flash_download_tool\dl_temp\bin_tmp\downloadPanel1\partition-table.bin
+address/file: 65536 C:\Users\liyang\Desktop\新建文件夹\flash_download_tool\dl_temp\bin_tmp\downloadPanel1\esp32s3_ai_deck_allinone.bin
+Wrote 21088 bytes (13422 compressed) at 0x00000000 in 0.2 seconds (effective 1095.1 kbit/s)...
+Wrote 3072 bytes (103 compressed) at 0x00008000 in 0.0 seconds (effective 2405.1 kbit/s)...
+Wrote 951248 bytes (576986 compressed) at 0x00010000 in 4.7 seconds (effective 1624.0 kbit/s)...
+File: C:\Users\liyang\Desktop\新建文件夹\flash_download_tool\dl_temp\bin_tmp\downloadPanel1\bootloader.bin
+File  md5: 6a8d71b758fbee5ab81bf81c1783d1b5
+Flash md5: 6a8d71b758fbee5ab81bf81c1783d1b5
+Hash of data verified.
+File: C:\Users\liyang\Desktop\新建文件夹\flash_download_tool\dl_temp\bin_tmp\downloadPanel1\partition-table.bin
+File  md5: 5d61d196adc3dba01928f264eb169be7
+Flash md5: 5d61d196adc3dba01928f264eb169be7
+Hash of data verified.
+File: C:\Users\liyang\Desktop\新建文件夹\flash_download_tool\dl_temp\bin_tmp\downloadPanel1\esp32s3_ai_deck_allinone.bin
+File  md5: 430aa2e1d5b095a4f2a0ce878aae55f1
+Flash md5: 430aa2e1d5b095a4f2a0ce878aae55f1
+Hash of data verified.
+
+Leaving...
+com closed
+Total use time: 8 s
+Download result: PASS
+*************************** END ****************************
+
