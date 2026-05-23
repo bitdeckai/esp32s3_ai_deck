@@ -327,3 +327,9 @@
 	I (1365) AIO: [echo] Echo start
 	I (1365) main_task: Returned from app_main()
 	I (2275) esp_netif_handlers: sta ip: 192.168.3.106, mask: 255.255.255.0, gw: 192.168.3.1
+
+## Support this project
+
+If this repo helps your work, you can support development via GitHub Sponsors:
+
+- https://github.com/sponsors/bitdeckai
