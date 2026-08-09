@@ -14,6 +14,12 @@
 
 ![esp32s3_camera_ov2640_speaker_crazyflie2.1](media/esp32s3_camera_ov2640_speaker_crazyflie2.1.png)
 
+## hardware -- 原理图V0.8 -> V1.1
+
+- 电源芯片，SY8088AAC 修改成 TPS63020DSJR，从锂电池供电，可以升压到5V，所以电池电压低到3.3V也没问题
+- P2连接器的TX2和RX2引脚引脚，从ESP32S3 TXD0和RXD0修改成GPIO2和GPIO3
+- U5的NS4150B芯片的供电，从VBAT修改成VCC，USB供电连接器也可以测试喇叭
+
 ## Demo video
 
 ![视频预览](media/esp32s3_camera_ov2640_allinone_test3.gif)
