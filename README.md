@@ -145,6 +145,8 @@
 
 ## esp32s3 ai deck和其他deck兼容问题
 
+esp32s3_camera_mic_speaker_v1.1版本没有这个问题，esp32s3_camera_mic_speaker_v0.8版本在 Crazyflie2.1 上使用时，Lighthouse deck 插入后，esp32s3 ai deck 的 TX2 和 RX2 接口需要与飞行器断开，才能启动。
+
 当Lighthouse deck插入之后，esp32s3 ai deck的TX2和RX2接口，需要跟飞行器断开，才能启动
 
 ![esp32s3_camera_ov2640_allinone_test1](media/esp32s3_uart.png)
